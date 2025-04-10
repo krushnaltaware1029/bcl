@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BCL Website</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: #fceef3;
+      color: #333;
+      text-align: center;
+      padding: 30px;
+    }
+    .hidden {
+      display: none;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      background-color: #ffb6c1;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .question {
+      margin-top: 20px;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+    .fingerprint-animation {
+      width: 100px;
+      height: 100px;
+      border: 2px dashed #ccc;
+      border-radius: 50%;
+      margin: 30px auto;
+      cursor: pointer;
+    }
+    #contract {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 20px;
+      margin-top: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div id="step1">
+    <h2>Hello dear BCL!</h2>
+    <button onclick="showStep('step1', 'step2')">Hello</button>
+  </div>
+
+  <div id="step2" class="hidden">
+    <p>Do you know what BCL stands for?</p>
+    <button onclick="showStep('step2', 'step3')">No, tell me</button>
+  </div>
+
+  <div id="step3" class="hidden">
+    <p>It means Besan Cha Laadu because you're sweet and chubby</p>
+    <button onclick="showStep('step3', 'step4')">Thankyouu <3</button>
+  </div>
+
+  <div id="step4" class="hidden">
+    <p>Well, I want you to fill this form.</p>
+    <button onclick="showStep('step4', 'formSection')">OK</button>
+  </div>
+
+  <div id="formSection" class="hidden">
+    <div class="question">
+      <p>Do you love me?</p>
+      <button onclick="handleAnswer(this, true)">Yes</button>
+      <button onclick="handleAnswer(this, false)">No</button>
+      <p class="error hidden">Wrong answer</p>
+    </div>
+    <div class="question hidden">
+      <p>Do you miss me?</p>
+      <button onclick="handleAnswer(this, true)">Yes</button>
+      <button onclick="handleAnswer(this, false)">No</button>
+      <p class="error hidden">Wrong answer</p>
+    </div>
+    <div class="question hidden">
+      <p>Do you think I'm pretty?</p>
+      <button onclick="handleAnswer(this, true)">Yes</button>
+      <button onclick="handleAnswer(this, false)">No</button>
+      <p class="error hidden">Wrong answer</p>
+    </div>
+    <div class="question hidden">
+      <p>Do you want to spend the rest of your life with me?</p>
+      <button onclick="handleAnswer(this, true)">Yes</button>
+      <button onclick="handleAnswer(this, false)">No</button>
+      <p class="error hidden">Wrong answer</p>
+    </div>
+    <div class="question hidden">
+      <p>Do you like chai?</p>
+      <button onclick="handleAnswer(this, true)">Yes</button>
+      <button onclick="handleAnswer(this, false)">No</button>
+      <p class="error hidden">Wrong answer</p>
+    </div>
+  </div>
+
+  <div id="fingerprintPage" class="hidden">
+    <p>Put your finger here</p>
+    <div class="fingerprint-animation" onclick="startScan()"></div>
+  </div>
+
+  <div id="contract" class="hidden">
+    <h2>Contract</h2>
+    <p>Hi,<br>
+    I'm BCL,<br>
+    I've agreed to stay with you for the rest of my life. <br>
+    Every year at the beginning of monsoon, apan bhel khayla jau.<br>
+    I miss you so much.<br>
+    I love you.</p>
+    ~Soham
+  </div>
+
+  <script>
+    function showStep(currentId, nextId) {
+      document.getElementById(currentId).classList.add("hidden");
+      document.getElementById(nextId).classList.remove("hidden");
+    }
+
+    function handleAnswer(button, isYes) {
+      const questionDiv = button.parentElement;
+      const errorText = questionDiv.querySelector(".error");
+
+      if (isYes) {
+        questionDiv.classList.add("hidden");
+        const next = questionDiv.nextElementSibling;
+        if (next && next.classList.contains("question")) {
+          next.classList.remove("hidden");
+        } else {
+          document.getElementById("formSection").classList.add("hidden");
+          document.getElementById("fingerprintPage").classList.remove("hidden");
+        }
+      } else {
+        button.style.backgroundColor = "#ff4d4d";
+        errorText.classList.remove("hidden");
+      }
+    }
+
+    function startScan() {
+      const fingerText = document.querySelector('#fingerprintPage p');
+      const fingerCircle = document.querySelector('.fingerprint-animation');
+      if (fingerText) fingerText.style.display = 'none';
+      if (fingerCircle) fingerCircle.style.display = 'none';
+
+      document.getElementById("contract").classList.remove("hidden");
+
+      if (navigator.vibrate) {
+        navigator.vibrate([200, 100, 200]);
+      }
+
+      console.log("Contract displayed! Send link to: krushhhhnal@gmail.com");
+    }
+  </script>
+</body>
+</html>
